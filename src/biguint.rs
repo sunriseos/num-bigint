@@ -622,7 +622,7 @@ impl Add<u64> for BigUint {
 }
 
 impl AddAssign<u64> for BigUint {
-    #[cfg(not(feature = "u64_digit"))]
+    #[cfg(not(u64_digit))]
     #[inline]
     fn add_assign(&mut self, other: u64) {
         let (hi, lo) = big_digit::from_doublebigdigit(other);
@@ -640,7 +640,7 @@ impl AddAssign<u64> for BigUint {
         }
     }
 
-    #[cfg(feature = "u64_digit")]
+    #[cfg(u64_digit)]
     #[inline]
     fn add_assign(&mut self, other: u64) {
         if other != 0 {
@@ -669,7 +669,7 @@ impl Add<u128> for BigUint {
 
 #[cfg(has_i128)]
 impl AddAssign<u128> for BigUint {
-    #[cfg(not(feature = "u64_digit"))]
+    #[cfg(not(u64_digit))]
     #[inline]
     fn add_assign(&mut self, other: u128) {
         if other <= u128::from(u64::max_value()) {
@@ -695,7 +695,7 @@ impl AddAssign<u128> for BigUint {
         }
     }
 
-    #[cfg(feature = "u64_digit")]
+    #[cfg(u64_digit)]
     #[inline]
     fn add_assign(&mut self, other: u128) {
         let (hi, lo) = big_digit::from_doublebigdigit(other);
@@ -777,7 +777,7 @@ impl SubAssign<u32> for BigUint {
 impl Sub<BigUint> for u32 {
     type Output = BigUint;
 
-    #[cfg(not(feature = "u64_digit"))]
+    #[cfg(not(u64_digit))]
     #[inline]
     fn sub(self, mut other: BigUint) -> BigUint {
         if other.data.len() == 0 {
@@ -788,7 +788,7 @@ impl Sub<BigUint> for u32 {
         other.normalized()
     }
 
-    #[cfg(feature = "u64_digit")]
+    #[cfg(u64_digit)]
     #[inline]
     fn sub(self, mut other: BigUint) -> BigUint {
         if other.data.len() == 0 {
@@ -811,7 +811,7 @@ impl Sub<u64> for BigUint {
 }
 
 impl SubAssign<u64> for BigUint {
-    #[cfg(not(feature = "u64_digit"))]
+    #[cfg(not(u64_digit))]
     #[inline]
     fn sub_assign(&mut self, other: u64) {
         let (hi, lo) = big_digit::from_doublebigdigit(other);
@@ -819,7 +819,7 @@ impl SubAssign<u64> for BigUint {
         self.normalize();
     }
 
-    #[cfg(feature = "u64_digit")]
+    #[cfg(u64_digit)]
     #[inline]
     fn sub_assign(&mut self, other: u64) {
         sub2(&mut self.data[..], &[other as BigDigit]);
@@ -830,7 +830,7 @@ impl SubAssign<u64> for BigUint {
 impl Sub<BigUint> for u64 {
     type Output = BigUint;
 
-    #[cfg(not(feature = "u64_digit"))]
+    #[cfg(not(u64_digit))]
     #[inline]
     fn sub(self, mut other: BigUint) -> BigUint {
         while other.data.len() < 2 {
@@ -842,7 +842,7 @@ impl Sub<BigUint> for u64 {
         other.normalized()
     }
 
-    #[cfg(feature = "u64_digit")]
+    #[cfg(u64_digit)]
     #[inline]
     fn sub(self, mut other: BigUint) -> BigUint {
         if other.data.len() == 0 {
@@ -866,7 +866,7 @@ impl Sub<u128> for BigUint {
 }
 #[cfg(has_i128)]
 impl SubAssign<u128> for BigUint {
-    #[cfg(not(feature = "u64_digit"))]
+    #[cfg(not(u64_digit))]
     #[inline]
     fn sub_assign(&mut self, other: u128) {
         let (a, b, c, d) = u32_from_u128(other);
@@ -874,7 +874,7 @@ impl SubAssign<u128> for BigUint {
         self.normalize();
     }
 
-    #[cfg(feature = "u64_digit")]
+    #[cfg(u64_digit)]
     #[inline]
     fn sub_assign(&mut self, other: u128) {
         let (hi, lo) = big_digit::from_doublebigdigit(other);
@@ -887,7 +887,7 @@ impl SubAssign<u128> for BigUint {
 impl Sub<BigUint> for u128 {
     type Output = BigUint;
 
-    #[cfg(not(feature = "u64_digit"))]
+    #[cfg(not(u64_digit))]
     #[inline]
     fn sub(self, mut other: BigUint) -> BigUint {
         while other.data.len() < 4 {
@@ -899,7 +899,7 @@ impl Sub<BigUint> for u128 {
         other.normalized()
     }
 
-    #[cfg(feature = "u64_digit")]
+    #[cfg(u64_digit)]
     #[inline]
     fn sub(self, mut other: BigUint) -> BigUint {
         while other.data.len() < 2 {
@@ -970,7 +970,7 @@ impl Mul<u64> for BigUint {
     }
 }
 impl MulAssign<u64> for BigUint {
-    #[cfg(not(feature = "u64_digit"))]
+    #[cfg(not(u64_digit))]
     #[inline]
     fn mul_assign(&mut self, other: u64) {
         if other == 0 {
@@ -983,7 +983,7 @@ impl MulAssign<u64> for BigUint {
         }
     }
 
-    #[cfg(feature = "u64_digit")]
+    #[cfg(u64_digit)]
     #[inline]
     fn mul_assign(&mut self, other: u64) {
         if other == 0 {
@@ -1009,7 +1009,7 @@ impl Mul<u128> for BigUint {
 }
 #[cfg(has_i128)]
 impl MulAssign<u128> for BigUint {
-    #[cfg(not(feature = "u64_digit"))]
+    #[cfg(not(u64_digit))]
     #[inline]
     fn mul_assign(&mut self, other: u128) {
         if other == 0 {
@@ -1022,7 +1022,7 @@ impl MulAssign<u128> for BigUint {
         }
     }
 
-    #[cfg(feature = "u64_digit")]
+    #[cfg(u64_digit)]
     #[inline]
     fn mul_assign(&mut self, other: u128) {
         if other == 0 {
@@ -1123,7 +1123,7 @@ impl DivAssign<u64> for BigUint {
 impl Div<BigUint> for u64 {
     type Output = BigUint;
 
-    #[cfg(not(feature = "u64_digit"))]
+    #[cfg(not(u64_digit))]
     #[inline]
     fn div(self, other: BigUint) -> BigUint {
         match other.data.len() {
@@ -1134,7 +1134,7 @@ impl Div<BigUint> for u64 {
         }
     }
 
-    #[cfg(feature = "u64_digit")]
+    #[cfg(u64_digit)]
     #[inline]
     fn div(self, other: BigUint) -> BigUint {
         match other.data.len() {
@@ -1168,7 +1168,7 @@ impl DivAssign<u128> for BigUint {
 impl Div<BigUint> for u128 {
     type Output = BigUint;
 
-    #[cfg(not(feature = "u64_digit"))]
+    #[cfg(not(u64_digit))]
     #[inline]
     fn div(self, other: BigUint) -> BigUint {
         match other.data.len() {
@@ -1185,7 +1185,7 @@ impl Div<BigUint> for u128 {
         }
     }
 
-    #[cfg(feature = "u64_digit")]
+    #[cfg(u64_digit)]
     #[inline]
     fn div(self, other: BigUint) -> BigUint {
         match other.data.len() {
@@ -2057,19 +2057,19 @@ pub fn to_str_radix_reversed(u: &BigUint, radix: u32) -> Vec<u8> {
     res
 }
 
-#[cfg(not(feature = "u64_digit"))]
+#[cfg(not(u64_digit))]
 #[inline]
 fn ensure_big_digit(raw: Vec<u32>) -> Vec<BigDigit> {
     raw
 }
 
-#[cfg(feature = "u64_digit")]
+#[cfg(u64_digit)]
 #[inline]
 fn ensure_big_digit(raw: Vec<u32>) -> Vec<BigDigit> {
     ensure_big_digit_slice(&raw)
 }
 
-#[cfg(feature = "u64_digit")]
+#[cfg(u64_digit)]
 #[inline]
 fn ensure_big_digit_slice(raw: &[u32]) -> Vec<BigDigit> {
     raw.chunks(2)
@@ -2120,12 +2120,12 @@ impl BigUint {
     /// Assign a value to a `BigUint`.
     ///
     /// The digits are in little-endian base 2<sup>32</sup>.
-    #[cfg(not(feature = "u64_digit"))]
+    #[cfg(not(u64_digit))]
     #[inline]
     pub fn assign_from_slice(&mut self, slice: &[u32]) {
         self.assign_from_slice_native(slice);
     }
-    #[cfg(feature = "u64_digit")]
+    #[cfg(u64_digit)]
     #[inline]
     pub fn assign_from_slice(&mut self, slice: &[u32]) {
         let slice_digits = ensure_big_digit_slice(slice);
@@ -2599,7 +2599,7 @@ impl IntDigits for BigUint {
 
 /// Combine four `u32`s into a single `u128`.
 #[cfg(has_i128)]
-#[cfg(any(test, not(feature = "u64_digit")))]
+#[cfg(any(test, not(u64_digit)))]
 #[inline]
 fn u32_to_u128(a: u32, b: u32, c: u32, d: u32) -> u128 {
     u128::from(d) | (u128::from(c) << 32) | (u128::from(b) << 64) | (u128::from(a) << 96)
@@ -2607,7 +2607,7 @@ fn u32_to_u128(a: u32, b: u32, c: u32, d: u32) -> u128 {
 
 /// Split a single `u128` into four `u32`.
 #[cfg(has_i128)]
-#[cfg(any(test, not(feature = "u64_digit")))]
+#[cfg(any(test, not(u64_digit)))]
 #[inline]
 fn u32_from_u128(n: u128) -> (u32, u32, u32, u32) {
     (
@@ -2619,7 +2619,7 @@ fn u32_from_u128(n: u128) -> (u32, u32, u32, u32) {
 }
 
 #[cfg(feature = "serde")]
-#[cfg(not(feature = "u64_digit"))]
+#[cfg(not(u64_digit))]
 impl serde::Serialize for BigUint {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -2634,7 +2634,7 @@ impl serde::Serialize for BigUint {
 }
 
 #[cfg(feature = "serde")]
-#[cfg(feature = "u64_digit")]
+#[cfg(u64_digit)]
 impl serde::Serialize for BigUint {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -2663,7 +2663,7 @@ impl serde::Serialize for BigUint {
 }
 
 #[cfg(feature = "serde")]
-#[cfg(not(feature = "u64_digit"))]
+#[cfg(not(u64_digit))]
 impl<'de> serde::Deserialize<'de> for BigUint {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
@@ -2675,7 +2675,7 @@ impl<'de> serde::Deserialize<'de> for BigUint {
 }
 
 #[cfg(feature = "serde")]
-#[cfg(feature = "u64_digit")]
+#[cfg(u64_digit)]
 impl<'de> serde::Deserialize<'de> for BigUint {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
@@ -2747,7 +2747,7 @@ fn get_radix_base(radix: u32, bits: usize) -> (BigDigit, usize) {
     }
 }
 
-#[cfg(not(feature = "u64_digit"))]
+#[cfg(not(u64_digit))]
 #[test]
 fn test_from_slice() {
     fn check(slice: &[u32], data: &[BigDigit]) {
@@ -2761,7 +2761,7 @@ fn test_from_slice() {
     check(&[-1i32 as u32], &[-1i32 as BigDigit]);
 }
 
-#[cfg(feature = "u64_digit")]
+#[cfg(u64_digit)]
 #[test]
 fn test_from_slice() {
     fn check(slice: &[u32], data: &[BigDigit]) {
