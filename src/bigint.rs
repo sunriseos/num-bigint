@@ -3027,10 +3027,6 @@ impl BigInt {
         Roots::nth_root(self, n)
     }
 
-    pub fn get_limb(&self, n: usize) -> BigDigit {
-        self.data.get_limb(n)
-    }
-
     pub fn trailing_zeros(&self) -> Option<usize> {
         self.data.trailing_zeros()
     }
