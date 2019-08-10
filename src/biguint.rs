@@ -450,9 +450,7 @@ impl ShrAssign<usize> for BigUint {
 impl Zero for BigUint {
     #[inline]
     fn zero() -> BigUint {
-        BigUint {
-            data: Vec::new(),
-        }
+        BigUint { data: Vec::new() }
     }
 
     #[inline]
@@ -469,9 +467,7 @@ impl Zero for BigUint {
 impl One for BigUint {
     #[inline]
     fn one() -> BigUint {
-        BigUint {
-            data: vec![1],
-        }
+        BigUint { data: vec![1] }
     }
 
     #[inline]
