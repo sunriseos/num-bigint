@@ -2113,14 +2113,6 @@ impl BigUint {
         big
     }
 
-    /// Creates and initializes a `BigUint`.
-    ///
-    /// The digits are in little-endian base matching `BigDigit`
-    #[inline]
-    pub fn from_slice_native(slice: &[BigDigit]) -> BigUint {
-        BigUint::new_native(slice.to_vec())
-    }
-
     /// Assign a value to a `BigUint`.
     ///
     /// The digits are in little-endian base 2<sup>32</sup>.
@@ -2774,19 +2766,6 @@ fn test_from_slice() {
     check(&[0, 0, 1, 2], &[0, 8_589_934_593]);
     check(&[0, 0, 1, 2, 0, 0], &[0, 8_589_934_593]);
     check(&[-1i32 as u32], &[(-1i32 as u32) as BigDigit]);
-}
-
-#[test]
-fn test_from_slice_native() {
-    fn check(slice: &[BigDigit], data: &[BigDigit]) {
-        assert!(BigUint::from_slice_native(slice).data == data);
-    }
-    check(&[1], &[1]);
-    check(&[0, 0, 0], &[]);
-    check(&[1, 2, 0, 0], &[1, 2]);
-    check(&[0, 0, 1, 2], &[0, 0, 1, 2]);
-    check(&[0, 0, 1, 2, 0, 0], &[0, 0, 1, 2]);
-    check(&[-1i32 as BigDigit], &[-1i32 as BigDigit]);
 }
 
 #[cfg(has_i128)]
