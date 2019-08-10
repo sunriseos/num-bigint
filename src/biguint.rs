@@ -169,7 +169,7 @@ fn from_bitwise_digits_le(v: &[u8], bits: usize) -> BigUint {
         })
         .collect();
 
-    BigUint::new_native(data)
+    biguint_from_vec(data)
 }
 
 // Convert from a power of two radix (bits == ilog2(radix)) where bits doesn't evenly divide
@@ -204,7 +204,7 @@ fn from_inexact_bitwise_digits_le(v: &[u8], bits: usize) -> BigUint {
         data.push(d as BigDigit);
     }
 
-    BigUint::new_native(data)
+    biguint_from_vec(data)
 }
 
 // Read little-endian radix digits
@@ -247,7 +247,7 @@ fn from_radix_digits_be(v: &[u8], radix: u32) -> BigUint {
         add2(&mut data, &[n]);
     }
 
-    BigUint::new_native(data)
+    biguint_from_vec(data)
 }
 
 impl Num for BigUint {
@@ -2075,6 +2075,16 @@ pub fn to_str_radix_reversed(u: &BigUint, radix: u32) -> Vec<u8> {
     res
 }
 
+/// Creates and initializes a `BigUint`.
+///
+/// The digits are in little-endian base matching `BigDigit`.
+///
+/// This is an internal `pub(crate)`-ish API only!
+#[inline]
+pub fn biguint_from_vec(digits: Vec<BigDigit>) -> BigUint {
+    BigUint { data: digits }.normalized()
+}
+
 impl BigUint {
     /// Creates and initializes a `BigUint`.
     ///
@@ -2093,14 +2103,6 @@ impl BigUint {
         big.assign_from_slice(&digits);
 
         big
-    }
-
-    /// Creates and initializes a `BigUint`.
-    ///
-    /// The digits are in little-endian base matching `BigDigit`.
-    #[inline]
-    pub fn new_native(digits: Vec<BigDigit>) -> BigUint {
-        BigUint { data: digits }.normalized()
     }
 
     /// Creates and initializes a `BigUint`.
@@ -2656,7 +2658,7 @@ impl<'de> serde::Deserialize<'de> for BigUint {
         D: serde::Deserializer<'de>,
     {
         let data: Vec<u32> = Vec::deserialize(deserializer)?;
-        Ok(BigUint::new(data))
+        Ok(biguint_from_vec(data))
     }
 }
 
@@ -2694,7 +2696,7 @@ impl<'de> serde::Deserialize<'de> for BigUint {
                     data.push(value);
                 }
 
-                Ok(BigUint::new_native(data))
+                Ok(biguint_from_vec(data))
             }
         }
 
