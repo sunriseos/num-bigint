@@ -69,12 +69,12 @@ impl Clone for BigUint {
 impl Arbitrary for BigUint {
     fn arbitrary<G: Gen>(g: &mut G) -> Self {
         // Use arbitrary from Vec
-        Self::new(Vec::<u32>::arbitrary(g))
+        biguint_from_vec(Vec::<BigDigit>::arbitrary(g))
     }
 
     fn shrink(&self) -> Box<Iterator<Item = Self>> {
         // Use shrinker from Vec
-        Box::new(self.data.shrink().map(|x| BigUint::new(x)))
+        Box::new(self.data.shrink().map(biguint_from_vec))
     }
 }
 
