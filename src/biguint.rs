@@ -39,7 +39,7 @@ use self::monty::monty_modpow;
 use super::VEC_SIZE;
 use crate::algorithms::{__add2, __sub2rev, add2, sub2, sub2rev};
 use crate::algorithms::{biguint_shl, biguint_shr};
-use crate::algorithms::{cmp_slice, fls, ilog2};
+use crate::algorithms::{cmp_slice, fls, ilog2, idiv_ceil};
 use crate::algorithms::{div_rem, div_rem_digit, mac_with_carry, mul3, scalar_mul};
 use crate::algorithms::{extended_gcd, mod_inverse};
 use crate::traits::{ExtendedGcd, ModInverse};
@@ -195,9 +195,9 @@ fn from_radix_digits_be(v: &[u8], radix: u32) -> BigUint {
     debug_assert!(v.iter().all(|&c| (c as u32) < radix));
 
     // Estimate how big the result will be, so we can pre-allocate it.
-    let bits = (radix as f64).log2() * v.len() as f64;
-    let big_digits = (bits / big_digit::BITS as f64).ceil();
-    let mut data = SmallVec::with_capacity(big_digits as usize);
+    let bits = ilog2(radix) * v.len();
+    let big_digits = idiv_ceil(bits, big_digit::BITS);
+    let mut data = SmallVec::with_capacity(big_digits);
 
     let (base, power) = get_radix_base(radix);
     let radix = radix as BigDigit;
@@ -1926,7 +1926,8 @@ fn to_radix_digits_le(u: &BigUint, radix: u32) -> Vec<u8> {
     debug_assert!(!u.is_zero() && !radix.is_power_of_two());
 
     // Estimate how big the result will be, so we can pre-allocate it.
-    let radix_digits = ((u.bits() as f64) / (radix as f64).log2()).ceil();
+    let bits = ilog2(radix);
+    let radix_digits = idiv_ceil(u.bits(), bits);
     let mut res = Vec::with_capacity(radix_digits as usize);
     let mut digits = u.clone();
 
