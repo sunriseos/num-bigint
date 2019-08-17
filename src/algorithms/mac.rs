@@ -1,5 +1,5 @@
-use std::cmp;
-use std::iter::repeat;
+use core::cmp;
+use core::iter::repeat;
 
 use crate::algorithms::{adc, add2, sub2, sub_sign};
 use crate::big_digit::{BigDigit, DoubleBigDigit, BITS};

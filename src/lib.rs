@@ -80,9 +80,17 @@
 //! The `num-bigint` crate is tested for rustc 1.15 and greater.
 
 #![doc(html_root_url = "https://docs.rs/num-bigint/0.2")]
-// We don't actually support `no_std` yet, and probably won't until `alloc` is stable.  We're just
-// reserving this ability with the "std" feature now, and compilation will fail without.
 #![cfg_attr(not(feature = "std"), no_std)]
+
+#[cfg(not(feature = "std"))]
+#[macro_use]
+extern crate alloc;
+
+#[cfg(feature = "std")]
+use std as alloc;
+
+#[cfg(feature = "std")]
+extern crate core;
 
 #[cfg(feature = "rand")]
 extern crate rand;
@@ -113,8 +121,9 @@ extern crate num_traits;
 #[cfg(feature = "prime")]
 extern crate byteorder;
 
+#[cfg(feature = "std")]
 use std::error::Error;
-use std::fmt;
+use core::fmt;
 
 #[macro_use]
 mod macros;
@@ -182,6 +191,7 @@ impl fmt::Display for ParseBigIntError {
     }
 }
 
+#[cfg(feature = "std")]
 impl Error for ParseBigIntError {
     fn description(&self) -> &str {
         self.__description()

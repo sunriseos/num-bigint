@@ -1,18 +1,19 @@
 #[allow(deprecated, unused_imports)]
-use std::ascii::AsciiExt;
-use std::borrow::Cow;
-use std::cmp::Ordering::{self, Equal, Greater, Less};
-use std::default::Default;
-use std::hash::{Hash, Hasher};
-use std::iter::{Product, Sum};
-use std::ops::{
+use alloc::borrow::Cow;
+use alloc::vec::Vec;
+use alloc::string::String;
+use core::cmp::Ordering::{self, Equal, Greater, Less};
+use core::default::Default;
+use core::hash::{Hash, Hasher};
+use core::iter::{Product, Sum};
+use core::ops::{
     Add, AddAssign, BitAnd, BitAndAssign, BitOr, BitOrAssign, BitXor, BitXorAssign, Div, DivAssign,
     Mul, MulAssign, Neg, Rem, RemAssign, Shl, ShlAssign, Shr, ShrAssign, Sub, SubAssign,
 };
-use std::str::{self, FromStr};
-use std::{cmp, fmt, mem};
-use std::{f32, f64};
-use std::{u64, u8};
+use core::str::{self, FromStr};
+use core::{cmp, fmt, mem};
+use core::{f32, f64};
+use core::{u64, u32, u8};
 
 #[cfg(feature = "serde")]
 use serde;
@@ -2518,7 +2519,7 @@ impl serde::Serialize for BigUint {
             .iter()
             .enumerate()
             .flat_map(|(i, n)| {
-                if i == last && n < &(::std::u32::MAX as u64) {
+                if i == last && n < &(u32::MAX as u64) {
                     vec![*n as u32]
                 } else {
                     vec![*n as u32, (n >> 32) as u32]

@@ -1,4 +1,4 @@
-use std::mem;
+use core::mem;
 
 /// Find last set bit
 /// fls(0) == 0, fls(u32::MAX) == 32

@@ -16,6 +16,10 @@ cargo test --verbose
 cargo build --no-default-features --features="std"
 cargo test --no-default-features --features="std"
 
+# It should build in no_std
+cargo build --no-default-features
+cargo test --no-default-features
+
 # Each isolated feature should also work everywhere.
 for feature in $FEATURES; do
   cargo build --verbose --no-default-features --features="std $feature"
