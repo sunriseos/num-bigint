@@ -17,7 +17,10 @@ cargo build --no-default-features --features="std"
 cargo test --no-default-features --features="std"
 
 # It should build in no_std
-cargo build --no-default-features
+rustup target add armv7r-none-eabi
+cargo build --no-default-features --target=armv7r-none-eabi
+
+# It should work in no_std
 cargo test --no-default-features
 
 # Each isolated feature should also work everywhere.
