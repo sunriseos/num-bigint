@@ -53,6 +53,9 @@ optional = true
 version = "1.0"
 default-features = false
 
+[dependencies.libm]
+version = "0.1.4"
+
 [dependencies.lazy_static]
 version = "1.2.0"
 default-features = false

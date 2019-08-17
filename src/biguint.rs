@@ -15,6 +15,9 @@ use core::{cmp, fmt, mem};
 use core::{f32, f64};
 use core::{u64, u32, u8};
 
+#[cfg(not(feature = "std"))]
+use libm::F64Ext;
+
 #[cfg(feature = "serde")]
 use serde;
 
@@ -23,9 +26,11 @@ use zeroize::Zeroize;
 
 use integer::{Integer, Roots};
 use num_traits::{
-    CheckedAdd, CheckedDiv, CheckedMul, CheckedSub, Float, FromPrimitive, Num, One, Pow,
+    CheckedAdd, CheckedDiv, CheckedMul, CheckedSub, FromPrimitive, Num, One, Pow,
     ToPrimitive, Unsigned, Zero,
 };
+use num_traits::float::FloatCore;
+
 use BigInt;
 
 use big_digit::{self, BigDigit};
@@ -1714,14 +1719,14 @@ impl FromPrimitive for BigUint {
         }
 
         // match the rounding of casting from float to int
-        n = n.trunc();
+        n = FloatCore::trunc(n);
 
         // handle 0.x, -0.x
         if n.is_zero() {
             return Some(BigUint::zero());
         }
 
-        let (mantissa, exponent, sign) = Float::integer_decode(n);
+        let (mantissa, exponent, sign) = FloatCore::integer_decode(n);
 
         if sign == -1 {
             return None;

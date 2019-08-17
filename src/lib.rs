@@ -121,6 +121,8 @@ extern crate num_traits;
 #[cfg(feature = "prime")]
 extern crate byteorder;
 
+extern crate libm;
+
 #[cfg(feature = "std")]
 use std::error::Error;
 use core::fmt;
