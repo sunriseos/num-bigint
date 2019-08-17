@@ -43,7 +43,6 @@ default-features = false
 optional = true
 version = "0.6"
 default-features = false
-features = ["std"]
 
 [dependencies.zeroize]
 version = "0.6"
@@ -53,13 +52,17 @@ optional = true
 optional = true
 version = "1.0"
 default-features = false
-features = ["std"]
 
 [dependencies.lazy_static]
 version = "1.2.0"
+default-features = false
+# no_std feature is an anti-pattern. Why, lazy_static, why?
+# See https://github.com/rust-lang-nursery/lazy-static.rs/issues/150
+features = ["spin_no_std"]
 
 [dependencies.byteorder]
 version = "1.2.7"
+default-features = false
 
 [dev-dependencies]
 criterion = "0.2"
@@ -73,7 +76,7 @@ version = "1.0"
 [features]
 default = ["std", "i128", "u64_digit"]
 i128 = ["num-integer/i128", "num-traits/i128"]
-std = ["num-integer/std", "num-traits/std", "smallvec/std", "rand/std"]
+std = ["num-integer/std", "num-traits/std", "smallvec/std", "rand/std", "serde/std"]
 u64_digit = []
 prime = ["rand"]
 nightly = ["zeroize/nightly", "rand/nightly"]
