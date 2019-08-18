@@ -35,5 +35,6 @@ cargo test --features="std $FEATURES"
 
 # make sure benchmarks can be built
 if [[ "$TRAVIS_RUST_VERSION" == "nightly" ]]; then
+  cd benchmark_crate
   cargo bench --all-features --no-run
 fi
