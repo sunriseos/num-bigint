@@ -20,7 +20,8 @@ use std::{i16, i32, i64, i8, isize};
 use std::{u16, u32, u64, u8, usize};
 
 use num_integer::Integer;
-use num_traits::{Float, FromPrimitive, Num, One, Pow, Signed, ToPrimitive, Zero};
+use num_traits::{FromPrimitive, Num, One, Pow, Signed, ToPrimitive, Zero};
+use num_traits::float::FloatCore;
 
 mod consts;
 use consts::*;

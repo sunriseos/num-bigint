@@ -21,6 +21,8 @@ rustup target add armv7r-none-eabi
 cargo build --no-default-features --target=armv7r-none-eabi
 
 # It should work in no_std
+# Note: Doctest might show an error: https://github.com/rust-lang/rust/issues/54010
+# The "error" is wrong however, the doctests still run.
 cargo test --no-default-features
 
 # Each isolated feature should also work everywhere.
