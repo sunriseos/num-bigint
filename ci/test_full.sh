@@ -17,8 +17,8 @@ cargo build --no-default-features --features="std"
 cargo test --no-default-features --features="std"
 
 # It should build in no_std
-rustup target add armv7r-none-eabi
-cargo build --no-default-features --target=armv7r-none-eabi
+rustup target add thumbv7m-none-eabi
+cargo build --no-default-features --target=thumbv7m-none-eabi
 
 # It should work in no_std
 # Note: Doctest might show an error: https://github.com/rust-lang/rust/issues/54010
