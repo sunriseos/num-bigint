@@ -29,6 +29,10 @@ cargo test --no-default-features
 for feature in $FEATURES; do
   cargo build --verbose --no-default-features --features="std $feature"
   cargo test --verbose --no-default-features --features="std $feature"
+
+  # Ensure that feature also works in nostd context
+  cargo build --verbose --no-default-features --features="$feature"
+  cargo test --verbose --no-default-features --features="$feature"
 done
 
 # test all supported features together
