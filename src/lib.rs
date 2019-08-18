@@ -78,6 +78,23 @@
 //! ## Compatibility
 //!
 //! The `num-bigint` crate is tested for rustc 1.15 and greater.
+//!
+//! ## `no_std` compatibility
+//!
+//! This crate is compatible with `no_std` environments from Rust 1.36. Note
+//! however that it still requires the `alloc` crate, so the user should ensure
+//! that they set a `global_allocator`.
+//!
+//! To use in no_std environment, add the crate as such in your `Cargo.toml`
+//! file:
+//!
+//! ```toml
+//! [dependencies]
+//! num-bigint = { version = "0.3", default-features=false }
+//! ```
+//!
+//! Every features should be compatible with no_std environment, so feel free to
+//! add features like `prime`, `i128`, etc...
 
 #![doc(html_root_url = "https://docs.rs/num-bigint/0.2")]
 #![cfg_attr(not(feature = "std"), no_std)]
