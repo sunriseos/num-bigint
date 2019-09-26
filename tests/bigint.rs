@@ -1120,9 +1120,20 @@ fn test_negative_shr() {
 #[test]
 #[cfg(feature = "rand")]
 fn test_random_shr() {
+
+    #[cfg(feature = "std")]
+    fn thread_rng() -> impl rand::Rng {
+        rand::thread_rng()
+    }
+    #[cfg(not(feature = "std"))]
+    fn thread_rng() -> impl rand::Rng {
+        // Chosen by fair dice roll
+        rand::StdRng::seed_from_u64(4)
+    }
+
     use rand::distributions::Standard;
-    use rand::Rng;
-    let mut rng = rand::thread_rng();
+
+    let mut rng = thread_rng();
 
     for p in rng.sample_iter::<i64, _>(&Standard).take(1000) {
         let big = BigInt::from(p);
