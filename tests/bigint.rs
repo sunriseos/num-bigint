@@ -1127,10 +1127,12 @@ fn test_random_shr() {
     }
     #[cfg(not(feature = "std"))]
     fn thread_rng() -> impl rand::Rng {
+        use rand::SeedableRng;
         // Chosen by fair dice roll
-        rand::StdRng::seed_from_u64(4)
+        rand::rngs::StdRng::seed_from_u64(4)
     }
 
+    use rand::Rng;
     use rand::distributions::Standard;
 
     let mut rng = thread_rng();

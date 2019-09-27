@@ -50,7 +50,9 @@
 //!
 //! It's easy to generate large random numbers:
 //!
-//! ```rust
+#![cfg_attr(feature = "std", doc = " ```")]
+#![cfg_attr(not(feature = "std"), doc = " ```ignore")]
+//!
 //! # #[cfg(feature = "rand")]
 //! extern crate rand;
 //! extern crate num_bigint_dig as bigint;
