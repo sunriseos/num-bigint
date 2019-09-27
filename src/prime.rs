@@ -440,6 +440,7 @@ fn get_bit(x: &BigUint, i: usize) -> u8 {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use alloc::vec::Vec;
     // use RandBigInt;
 
     use crate::biguint::ToBigUint;
